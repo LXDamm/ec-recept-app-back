@@ -1,10 +1,9 @@
 import express from 'express';
+import { getAllRecipes, getRecipe } from '../controllers/recipe';
 
 const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.send('Recept App API, Recipe, TODO\n');
-});
+router.get('/', getAllRecipes);
+router.get('/:recipeId', getRecipe);
 
 export default router;
