@@ -1,8 +1,8 @@
 # Recept App - Backend
 Använder Node, Nodemon, Babel, Express och Firebase
 
-Bygg med yarn build
-Kör med yarn start
+Bygg med ´yarn build´
+Kör med ´yarn start´
 
 Dependencies:
 nodemon
