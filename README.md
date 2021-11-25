@@ -5,11 +5,11 @@ Bygg med `yarn build`
 Kör med `yarn start`
 
 Dependencies:
-nodemon
-@babel/runtime
-@babel/cli
-@babel/core
-@babel/preset-env
-@babel/plugin-transform-runtime
-express
-firebase-admin
+ - nodemon
+ - @babel/runtime
+ - @babel/cli
+ - @babel/core
+ - @babel/preset-env
+ - @babel/plugin-transform-runtime
+ - express
+ - firebase-admin
