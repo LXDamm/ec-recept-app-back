@@ -1,10 +1,8 @@
 import express from 'express';
+import { getUser } from '../controllers/user';
 
 const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.send('Recept App API, User, TODO\n');
-});
+router.get('/', getUser);
 
 export default router;
