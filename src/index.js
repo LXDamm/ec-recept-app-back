@@ -6,7 +6,7 @@ const app = express();
 const port = 3030;
 
 app.use('/user', userRoutes);
-app.use('/recipes', recipeRoutes);
+app.use('/recipe', recipeRoutes);
 
 app.get('/', (req, res) => {
   res.send('Recept App API, User, TODO\n')
