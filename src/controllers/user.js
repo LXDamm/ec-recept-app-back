@@ -20,3 +20,13 @@ export const getAllUsers = async (req, res) => {
         res.json(doc.data());
     }
 };
+
+export const createUser = async (req, res) => {
+    const user = req.body;
+    const doc = await db.collection('users').add(user);
+    if (!doc.exists) {
+        res.send('Could not create document!');
+    } else {
+        res.json(doc.data());
+    }
+};
