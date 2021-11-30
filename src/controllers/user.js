@@ -1,4 +1,7 @@
 import admin from '../firebase/config';
+import {
+    validUser
+} from '../utils/schema';
 
 const db = admin.firestore();
 
@@ -23,10 +26,14 @@ export const getAllUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
     const user = req.body;
-    const doc = await db.collection('users').add(user);
-    if (!doc.exists) {
-        res.send('Could not create document!');
+    if (validUser(user)) {
+        const doc = await (await db.collection('users').add(user)).get();
+        if (!doc.exists) {
+            res.send('Could not create document!');
+        } else {
+            res.json(doc.data());
+        }
     } else {
-        res.json(doc.data());
+        res.send('Invalid user schema!');
     }
 };

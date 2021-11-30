@@ -1,9 +1,12 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import userRoutes from './routes/user.js';
 import recipeRoutes from './routes/recipe.js';
 
 const app = express();
 const port = 3030;
+
+app.use(bodyParser.json());
 
 app.use('/user', userRoutes);
 app.use('/recipe', recipeRoutes);
