@@ -1,4 +1,5 @@
 import admin from '../firebase/config';
+import { validRecipeBody } from '../utils/schema';
 
 const db = admin.firestore();
 
@@ -15,15 +16,13 @@ export const getRecipe = async (req, res) => {
 export const getAllRecipes = async (req, res) => {
 	const docs = await db.collection('recipes').get();
 	if (docs.empty) {
-		res.send('No recipes');
+		res.send('No recipes!');
 	} else {
-		let products = [];
+		const recipes = [];
 		docs.forEach((doc) => {
-			let product = doc.data();
-			product.id = doc.id;
-			products.push(product);
+			recipes.push(doc.data());
 		});
-		res.json(products);
+		res.json(recipes);
 	}
 };
 
@@ -31,22 +30,28 @@ export const postRecipe = async (req, res) => {
 	const body = req.body;
 	if (validRecipeBody(body)) {
 		try {
-			const setResult = await db
-				.collection('users')
-				.doc(authResult.uid)
-				.set({
-					username: body.username,
-					firstname: body.firstname,
-					surname: body.surname,
-					bio: body.bio,
-					follows: body.follows,
-					favorites: body.favorites,
+			const docRef = await db
+				.collection('recipes')
+				.add({
+					description: body.description,
+					ingredients: body.ingredients,
+					title: body.title,
+					rating: body.rating,
+					created: 'undefined',
+					categories: body.categories,
+					userId: body.userId
 				});
-			const doc = await db.collection('users').doc(authResult.uid).get();
-			if (!doc.exists) res.send('Could not create document!');
-			else res.status(201).json({ userId: authResult.uid });
+			const doc = await docRef.get();
+			console.log(doc.id);
+			const recipeId = doc.id;
+			if (!doc.exists) {
+				res.send('Could not create document!');
+			} else {
+				res.status(201).json({ recipeId: recipeId});
+			}
 		} catch (error) {
-			res.status(409).send('User already exists!');
+			console.log(error);
+			res.status(409).send(error);
 		}
 	} else {
 		res.status(400).send('Invalid recipe schema!');

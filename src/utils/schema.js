@@ -18,7 +18,6 @@ export const validRecipeBody = (data) => {
 		'title' in data &&
 		'rating' in data &&
 		'userId' in data &&
-		'created' in data &&
 		'categories' in data
 	);
 };
