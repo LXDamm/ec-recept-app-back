@@ -32,6 +32,7 @@ export const getAllUsers = async (req, res) => {
 export const createUser = async (req, res) => {
     const body = req.body;
     if (validUserBody(body)) {
+        try {
         const authResult = await auth.createUser({
             email: body.email,
             emailVerified: false,
@@ -47,10 +48,10 @@ export const createUser = async (req, res) => {
             favorites: body.favorites
         });
         const doc = await db.collection('users').doc(authResult.uid).get();
-        if (!doc.exists) {
-            res.send('Could not create document!');
-        } else {
-            res.json(doc.data());
+        if (!doc.exists) res.send('Could not create document!');
+        else res.json(doc.data());
+        } catch (error) {
+            res.status(409).send('User already exists!');
         }
     } else {
         res.send('Invalid user schema!');
