@@ -49,11 +49,11 @@ export const createUser = async (req, res) => {
         });
         const doc = await db.collection('users').doc(authResult.uid).get();
         if (!doc.exists) res.send('Could not create document!');
-        else res.json(doc.data());
+        else res.status(201).json({userId: authResult.uid});
         } catch (error) {
             res.status(409).send('User already exists!');
         }
     } else {
-        res.send('Invalid user schema!');
+        res.status(400).send('Invalid user schema!');
     }
 };
