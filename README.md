@@ -5,6 +5,7 @@ Bygg med `yarn build`
 Kör med `yarn start`
 
 Dependencies:
+ - yarn
  - nodemon
  - @babel/runtime
  - @babel/cli
