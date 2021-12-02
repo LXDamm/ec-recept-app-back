@@ -9,7 +9,9 @@ export const getRecipe = async (req, res) => {
 	if (!doc.exists) {
 		res.send('No such document!');
 	} else {
-		res.json(doc.data());
+		let data = doc.data();
+		data.id = doc.id;
+		res.json(data);
 	}
 };
 
