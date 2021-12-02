@@ -20,7 +20,9 @@ export const getAllRecipes = async (req, res) => {
 	} else {
 		const recipes = [];
 		docs.forEach((doc) => {
-			recipes.push(doc.data());
+			let data = doc.data();
+			data.id = doc.id;
+			recipes.push(data);
 		});
 		res.json(recipes);
 	}
