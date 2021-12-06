@@ -43,7 +43,7 @@ export const postRecipe = async (req, res) => {
 					rating: body.rating,
 					created: 'undefined',
 					categories: body.categories,
-					userId: body.userId
+					userId: body.userId,
 				});
 			const doc = await docRef.get();
 			console.log(doc.id);
@@ -59,5 +59,16 @@ export const postRecipe = async (req, res) => {
 		}
 	} else {
 		res.status(400).send('Invalid recipe schema!');
+	}
+};
+
+export const deleteRecipe = async (req, res) => {
+	const recipeId = req.params.recipeId.trim();
+	const result = await db.collection('recipes').doc(recipeId).delete();
+	const doc = await db.collection('recipe').doc(recipeId).get();
+	if (!doc.exists) {
+		res.send('Document deleted!');
+	} else {
+		res.send('Error deleting!');
 	}
 };
