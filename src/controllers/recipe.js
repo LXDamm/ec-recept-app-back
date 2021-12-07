@@ -39,6 +39,7 @@ export const postRecipe = async (req, res) => {
 				.collection('recipes')
 				.add({
 					description: body.description,
+					instruction: body.instruction,
 					ingredients: body.ingredients,
 					instruction: body.instruction,
 					title: body.title,

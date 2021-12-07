@@ -14,6 +14,7 @@ export const validUserBody = (data) => {
 export const validRecipeBody = (data) => {
 	return (
 		'description' in data &&
+		'instruction' in data &&
 		'ingredients' in data &&
 		'title' in data &&
 		'rating' in data &&
