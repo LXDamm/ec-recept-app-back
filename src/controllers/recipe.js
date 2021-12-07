@@ -41,7 +41,6 @@ export const postRecipe = async (req, res) => {
 					description: body.description,
 					instruction: body.instruction,
 					ingredients: body.ingredients,
-					instruction: body.instruction,
 					title: body.title,
 					rating: 'undefined',
 					created: `${date.getUTCFullYear()}-${date.getMonth()}-${date.getDate()}`,
