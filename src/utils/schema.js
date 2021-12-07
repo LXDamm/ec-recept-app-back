@@ -21,3 +21,14 @@ export const validRecipeBody = (data) => {
 		'categories' in data
 	);
 };
+
+export const validRecipePostBody = (data) => {
+	return (
+		'description' in data &&
+		'ingredients' in data &&
+		'title' in data &&
+		'instruction' in data &&
+		'userId' in data &&
+		'categories' in data
+	);
+};
