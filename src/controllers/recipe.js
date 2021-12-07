@@ -1,5 +1,5 @@
 import admin from '../firebase/config';
-import { validRecipeBody } from '../utils/schema';
+import { validRecipePostBody } from '../utils/schema';
 
 const db = admin.firestore();
 
@@ -31,17 +31,19 @@ export const getAllRecipes = async (req, res) => {
 };
 
 export const postRecipe = async (req, res) => {
+	const date = new Date();
 	const body = req.body;
-	if (validRecipeBody(body)) {
+	if (validRecipePostBody(body)) {
 		try {
 			const docRef = await db
 				.collection('recipes')
 				.add({
 					description: body.description,
 					ingredients: body.ingredients,
+					instruction: body.instruction,
 					title: body.title,
-					rating: body.rating,
-					created: 'undefined',
+					rating: 'undefined',
+					created: `${date.getUTCFullYear()}-${date.getMonth()}-${date.getDate()}`,
 					categories: body.categories,
 					userId: body.userId,
 				});
