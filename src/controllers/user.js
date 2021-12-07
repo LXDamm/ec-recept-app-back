@@ -59,13 +59,14 @@ export const createUser = async (req, res) => {
 	}
 };
 
-export const loginUser = (req,res) =>{
+export const loginUser = async (req,res) =>{
 	const user = {
-		email = req.body.email,
+		email: req.body.email,
 		password: req.body.password
 	};
 
-	firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+	auth.signInWithEmailAndPassword(user.email, user.password)
+	
 	.then(data =>{
 	  return data.user.uid;
 	})
