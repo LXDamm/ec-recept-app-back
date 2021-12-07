@@ -48,7 +48,6 @@ export const postRecipe = async (req, res) => {
 					userId: body.userId,
 				});
 			const doc = await docRef.get();
-			console.log(doc.id);
 			const recipeId = doc.id;
 			if (!doc.exists) {
 				res.send('Could not create document!');
