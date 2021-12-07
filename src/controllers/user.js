@@ -58,3 +58,29 @@ export const createUser = async (req, res) => {
 		res.status(400).send('Invalid user schema!');
 	}
 };
+
+export const loginUser = async (req,res) =>{
+	const user = {
+		email: req.body.email,
+		password: req.body.password
+	};
+
+	auth.signInWithEmailAndPassword(user.email, user.password)
+	
+	.then(data =>{
+	  return data.user.uid;
+	})
+	.then(id=>{
+	  return res.json({ id });
+	})
+	.catch(err =>{
+	  console.log(err);
+	  if(err.code === 'auth/wrong-password'){
+		return res.status(403).json({ general: 'Wrong Password, please try again'});
+	  }else{
+	  return res.status(500).json({ error: err.code })    
+	  }
+	
+	})
+
+}
