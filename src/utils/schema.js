@@ -1,4 +1,4 @@
-export const validUserBody = (data) => {
+export const validUserCreateBody = (data) => {
 	return (
 		'username' in data &&
 		'email' in data &&
@@ -8,6 +8,12 @@ export const validUserBody = (data) => {
 		'bio' in data &&
 		'favorites' in data &&
 		'follows' in data
+	);
+};
+
+export const validUserLoginBody = (data) => {
+	return (
+		'token' in data
 	);
 };
 

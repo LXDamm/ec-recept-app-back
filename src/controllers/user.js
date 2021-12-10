@@ -1,5 +1,5 @@
 import admin from '../firebase/config';
-import { validUserBody } from '../utils/schema';
+import { validUserCreateBody, validUserLoginBody } from '../utils/schema';
 
 const auth = admin.auth();
 const db = admin.firestore();
@@ -29,13 +29,13 @@ export const getAllUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
 	const body = req.body;
-	if (validUserBody(body)) {
+	if (validUserCreateBody(body)) {
 		try {
 			const authResult = await auth.createUser({
 				email: body.email,
 				emailVerified: false,
 				password: body.password,
-				birthdate: body.birthdate,
+				birthdate: body.birthdate
 			});
 			const setResult = await db
 				.collection('users')
@@ -46,7 +46,7 @@ export const createUser = async (req, res) => {
 					surname: body.surname,
 					bio: body.bio,
 					follows: body.follows,
-					favorites: body.favorites,
+					favorites: body.favorites
 				});
 			const doc = await db.collection('users').doc(authResult.uid).get();
 			if (!doc.exists) res.send('Could not create document!');
@@ -59,28 +59,17 @@ export const createUser = async (req, res) => {
 	}
 };
 
-export const loginUser = async (req,res) =>{
-	const user = {
-		email: req.body.email,
-		password: req.body.password
-	};
+export const loginUser = async (req, res) => {
+	const body = req.body;
+	if (validUserLoginBody(body)) {
+		const token = await auth.verifyIdToken(body.token);
+		const uid = token.uid;
+		console.log(uid);
+	} else {
+		res.status(400).send('Invalid user schema!');
+	}
+}
 
-	auth.signInWithEmailAndPassword(user.email, user.password)
-	
-	.then(data =>{
-	  return data.user.uid;
-	})
-	.then(id=>{
-	  return res.json({ id });
-	})
-	.catch(err =>{
-	  console.log(err);
-	  if(err.code === 'auth/wrong-password'){
-		return res.status(403).json({ general: 'Wrong Password, please try again'});
-	  }else{
-	  return res.status(500).json({ error: err.code })    
-	  }
-	
-	})
-
+export const checkAuth = async (req, res) => {
+	const body = req.body;
 }
