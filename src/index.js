@@ -1,6 +1,7 @@
 import express from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import accountRoutes from './routes/account';
 import userRoutes from './routes/user';
 import recipeRoutes from './routes/recipe';
@@ -8,12 +9,12 @@ import recipeRoutes from './routes/recipe';
 const app = express();
 const port = 3030;
 
-app.use((req, res, next) => {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
-});
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    methods: "GET, POST, DELETE"
+}
 
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 app.use('/account', accountRoutes);
