@@ -26,7 +26,13 @@ export const loginAccount = async (req, res) => {
 	if (validUserLoginBody(body)) {
 		const token = await auth.verifyIdToken(body.token);
 		const uid = token.uid;
-		console.log(uid);
+		const doc = await db.collection('users').doc(uid).get();
+        const account = doc.data();
+        if (!doc.exists) {
+            res.send('No such document!');
+        } else {
+            res.json(account);
+        }
 	} else {
 		res.status(400).send('Invalid user schema!');
 	}
