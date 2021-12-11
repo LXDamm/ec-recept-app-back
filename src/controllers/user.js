@@ -7,10 +7,17 @@ const db = admin.firestore();
 export const getUser = async (req, res) => {
 	const userId = req.params.userId.trim();
 	const doc = await db.collection('users').doc(userId).get();
+	const user = doc.data();
+	const userFiltered = {
+		username: user.username,
+		bio: user.bio,
+		favorites: user.favorites,
+		follows: user.follows
+	};
 	if (!doc.exists) {
 		res.send('No such document!');
 	} else {
-		res.json(doc.data());
+		res.json(userFiltered);
 	}
 };
 
