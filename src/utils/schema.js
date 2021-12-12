@@ -31,11 +31,17 @@ export const validRecipeBody = (data) => {
 
 export const validRecipePostBody = (data) => {
 	return (
+		'token' in data &&
 		'description' in data &&
 		'ingredients' in data &&
 		'title' in data &&
-		'instruction' in data &&
-		'userId' in data &&
+		'instructions' in data &&
 		'categories' in data
+	);
+};
+
+export const validRecipeDeleteBody = (data) => {
+	return (
+		'token' in data
 	);
 };
