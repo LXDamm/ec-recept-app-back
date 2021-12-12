@@ -86,7 +86,6 @@ export const deleteRecipe = async (req, res) => {
 			if (doc.exists) {
 				const data = doc.data();
 				const userId = data.userId;
-				console.log(`token.uid ${token.uid}, userId ${userId}`);
 				if (token.uid = userId) {
 					const result = await db.collection('recipes').doc(recipeId).delete();
 					doc = await db.collection('recipes').doc(recipeId).get();
