@@ -10,15 +10,22 @@ const app = express();
 const port = 3030;
 
 app.use((req, res, next) => {
-
-    var allowedDomains = ['http://localhost:3030', 'http://127.0.0.1:3030', 'http://localhost:3000', 'http://127.0.0.1:3000'];
+    var allowedDomains = [
+        'http://localhost:3030',
+        'http://127.0.0.1:3030',
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
+    ];
     var origin = req.headers.origin;
     if (allowedDomains.indexOf(origin) > -1) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     }
 
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Accept');
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-Requested-With,content-type, Accept'
+    );
     res.setHeader('Access-Control-Allow-Credentials', true);
 
     next();
