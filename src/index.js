@@ -1,31 +1,39 @@
 import express from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';
-import userRoutes from './routes/user.js';
-import recipeRoutes from './routes/recipe.js';
+import cors from 'cors';
+import accountRoutes from './routes/account';
+import userRoutes from './routes/user';
+import recipeRoutes from './routes/recipe';
 
 const app = express();
 const port = 3030;
 
-app.use(function (req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
+app.use((req, res, next) => {
+
+    var allowedDomains = ['http://localhost:3030', 'http://127.0.0.1:3030', 'http://localhost:3000', 'http://127.0.0.1:3000'];
+    var origin = req.headers.origin;
+    if (allowedDomains.indexOf(origin) > -1) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Accept');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    next();
 });
 
 app.use(bodyParser.json());
 
+app.use('/account', accountRoutes);
 app.use('/user', userRoutes);
 app.use('/recipe', recipeRoutes);
 
 app.get('/', (req, res) => {
-	res.send('Recept App API, User, TODO\n');
+    res.send('Recept App API, User, TODO\n');
 });
 
-// app.listen(port, () => {
-//   console.log(`Listening at http://localhost:${port}`);
-// })
-
 http.createServer(app).listen(port, () => {
-	console.log(`Listening at http://localhost:${port}`);
+    console.log(`Listening at http://localhost:${port}`);
 });
