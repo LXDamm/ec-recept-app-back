@@ -1,10 +1,10 @@
 import express from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';
-import cors from 'cors';
 import accountRoutes from './routes/account';
 import userRoutes from './routes/user';
 import recipeRoutes from './routes/recipe';
+import commentRoutes from './routes/comment';
 
 const app = express();
 const port = 3030;
@@ -29,6 +29,7 @@ app.use(bodyParser.json());
 app.use('/account', accountRoutes);
 app.use('/user', userRoutes);
 app.use('/recipe', recipeRoutes);
+app.use('/comment', commentRoutes);
 
 app.get('/', (req, res) => {
     res.send('Recept App API, User, TODO\n');

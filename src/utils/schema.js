@@ -45,3 +45,11 @@ export const validRecipeDeleteBody = (data) => {
 		'token' in data
 	);
 };
+
+export const validCommentPostBody = (data) => {
+	return (
+		'token' in data &&
+		'userId' in data &&
+		'text' in data
+	);
+};
