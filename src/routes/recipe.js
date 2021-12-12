@@ -1,5 +1,10 @@
 import express from 'express';
-import { getAllRecipes, getRecipe, postRecipe, deleteRecipe } from '../controllers/recipe';
+import {
+    getAllRecipes,
+    getRecipe,
+    postRecipe,
+    deleteRecipe,
+} from '../controllers/recipe';
 
 const router = express.Router();
 

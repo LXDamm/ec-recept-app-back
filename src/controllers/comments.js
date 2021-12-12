@@ -14,14 +14,14 @@ export const postComment = async (req, res) => {
         if (!userId) throw new Error('No user id');
         const docRef = await db.collection('comments').add({
             userId: userId,
-            text: body.text
+            text: body.text,
         });
         if (!docRef) throw new Error('No collection');
         const doc = await docRef.get();
         if (!doc.exists) throw new Error('No doc created');
         const commentId = doc.id;
         res.status(201).json({
-            commentId: commentId
+            commentId: commentId,
         });
     } catch (error) {
         console.log(error);
@@ -37,4 +37,4 @@ export const postComment = async (req, res) => {
         }
         res.send(error);
     }
-}
+};
