@@ -42,28 +42,22 @@ export const createAccount = async (req, res) => {
     const body = req.body;
     if (validUserCreateBody(body)) {
         try {
-            const authResult = await auth.createUser({
-                email: body.email,
-                emailVerified: false,
-                password: body.password,
-                birthdate: body.birthdate,
-            });
             const setResult = await db
                 .collection('users')
-                .doc(authResult.uid)
+                .doc(body.userId)
                 .set({
                     username: body.username,
-                    firstname: body.firstname,
-                    surname: body.surname,
-                    bio: body.bio,
-                    follows: body.follows,
-                    favorites: body.favorites,
+                    firstname: 'Jane',
+                    surname: 'Doe',
+                    bio: '',
+                    follows: [],
+                    favorites: [],
                 });
-            const doc = await db.collection('users').doc(authResult.uid).get();
+            const doc = await db.collection('users').doc(body.userId).get();
             if (!doc.exists) res.send('Could not create document!');
-            else res.status(201).json({ userId: authResult.uid });
+            else res.status(201).json({ userId: body.userId });
         } catch (error) {
-            res.status(409).send('User already exists!');
+            res.status(409).send(error);
         }
     } else {
         res.status(400).send('Invalid user schema!');
