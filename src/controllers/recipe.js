@@ -37,6 +37,7 @@ export const getAllRecipes = async (req, res) => {
 export const postRecipe = async (req, res) => {
 	const date = new Date();
 	const body = req.body;
+	console.log(body);
 	if (validRecipePostBody(body)) {
 		const token = await auth.verifyIdToken(body.token);
 		if (token) {
