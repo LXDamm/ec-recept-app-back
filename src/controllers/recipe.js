@@ -105,3 +105,19 @@ export const deleteRecipe = async (req, res) => {
         res.status(400).send('Invalid schema');
     }
 };
+
+export const getRecipesByUser = async (req, res) => {
+    const userId = req.params.userId.trim();
+    const docs = await db.collection('recipes').where("userId", "==", userId).get();
+    if (docs.empty) {
+        res.send('No recipes!');
+    } else {
+        const recipes = [];
+        docs.forEach((doc) => {
+            let data = doc.data();
+            data.id = doc.id;
+            recipes.push(data);
+        });
+        res.json(recipes);
+    }
+};
