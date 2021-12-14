@@ -13,7 +13,7 @@ export const validUserLoginBody = (data) => {
 export const validRecipeBody = (data) => {
     return (
         'description' in data &&
-        'instruction' in data &&
+        'instructions' in data &&
         'ingredients' in data &&
         'title' in data &&
         'rating' in data &&
