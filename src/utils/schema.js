@@ -2,7 +2,7 @@ export const validUserCreateBody = (data) => {
     return (
         'username' in data &&
         'email' in data &&
-        'userId' in data
+        'token'
     );
 };
 

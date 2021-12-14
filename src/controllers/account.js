@@ -42,6 +42,8 @@ export const createAccount = async (req, res) => {
     const body = req.body;
     if (validUserCreateBody(body)) {
         try {
+            const token = await auth.verifyIdToken(body.token);
+            const uid = token.uid;
             const setResult = await db
                 .collection('users')
                 .doc(body.userId)
@@ -53,7 +55,7 @@ export const createAccount = async (req, res) => {
                     follows: [],
                     favorites: [],
                 });
-            const doc = await db.collection('users').doc(body.userId).get();
+            const doc = await db.collection('users').doc(uid).get();
             if (!doc.exists) res.send('Could not create document!');
             else res.status(201).json({ userId: body.userId });
         } catch (error) {
