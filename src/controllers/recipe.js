@@ -41,7 +41,7 @@ export const postRecipe = async (req, res) => {
 			try {
 				const docRef = await db.collection('recipes').add({
 					description: body.description,
-					instructions: body.instructions,
+					instruction: body.instruction,
 					ingredients: body.ingredients,
 					title: body.title,
 					rating: 'undefined',

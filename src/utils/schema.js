@@ -13,7 +13,7 @@ export const validUserLoginBody = (data) => {
 export const validRecipeBody = (data) => {
     return (
         'description' in data &&
-        'instructions' in data &&
+        'instruction' in data &&
         'ingredients' in data &&
         'title' in data &&
         'rating' in data &&
@@ -28,7 +28,7 @@ export const validRecipePostBody = (data) => {
         'description' in data &&
         'ingredients' in data &&
         'title' in data &&
-        'instructions' in data &&
+        'instruction' in data &&
         'categories' in data
     );
 };
